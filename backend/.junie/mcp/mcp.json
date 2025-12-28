@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/home/hugo/.config/herd-lite/bin/php",
+            "args": [
+                "/home/hugo/Documentos/testes/trustfactory-test/backend/laravel-app/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
