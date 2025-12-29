@@ -19,6 +19,12 @@ docker compose -f $COMPOSE_FILE up -d --build
 echo "Installing backend dependencies..."
 docker compose -f $COMPOSE_FILE exec app composer install
 
+echo "Installing frontend dependencies..."
+docker compose -f $COMPOSE_FILE exec app npm install
+
+echo "Building frontend assets..."
+docker compose -f $COMPOSE_FILE exec app npm run build
+
 echo "Generating application key..."
 docker compose -f $COMPOSE_FILE exec app php artisan key:generate
 
