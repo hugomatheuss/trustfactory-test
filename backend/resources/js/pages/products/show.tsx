@@ -1,6 +1,6 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
-import { FormEvent, useState } from 'react';
+import EcommerceLayout from '@/layouts/ecommerce-layout';
+import { FormEvent } from 'react';
 
 interface Product {
     id: number;
@@ -19,9 +19,7 @@ interface Props {
 }
 
 export default function Show({ product, auth }: Props) {
-    const [quantity, setQuantity] = useState(1);
-
-    const { post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         product_id: product.id,
         quantity: 1,
     });
@@ -35,28 +33,23 @@ export default function Show({ product, auth }: Props) {
 
     const handleAddToCart = (e: FormEvent) => {
         e.preventDefault();
-        post('/cart/add', {
-            data: {
-                product_id: product.id,
-                quantity: quantity,
-            },
-        });
+        post('/cart/add');
     };
 
     const incrementQuantity = () => {
-        if (quantity < product.stock_quantity) {
-            setQuantity(quantity + 1);
+        if (data.quantity < product.stock_quantity) {
+            setData('quantity', data.quantity + 1);
         }
     };
 
     const decrementQuantity = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
+        if (data.quantity > 1) {
+            setData('quantity', data.quantity - 1);
         }
     };
 
     return (
-        <AppLayout>
+        <EcommerceLayout>
             <Head title={product.name} />
 
             <div className="py-12">
@@ -152,18 +145,18 @@ export default function Show({ product, auth }: Props) {
                                                 <button
                                                     type="button"
                                                     onClick={decrementQuantity}
-                                                    disabled={quantity <= 1}
+                                                    disabled={data.quantity <= 1}
                                                     className="px-3 py-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-400 dark:hover:bg-gray-700"
                                                 >
                                                     −
                                                 </button>
                                                 <span className="w-12 text-center text-gray-900 dark:text-white">
-                                                    {quantity}
+                                                    {data.quantity}
                                                 </span>
                                                 <button
                                                     type="button"
                                                     onClick={incrementQuantity}
-                                                    disabled={quantity >= product.stock_quantity}
+                                                    disabled={data.quantity >= product.stock_quantity}
                                                     className="px-3 py-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-400 dark:hover:bg-gray-700"
                                                 >
                                                     +
@@ -202,6 +195,6 @@ export default function Show({ product, auth }: Props) {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </EcommerceLayout>
     );
 }

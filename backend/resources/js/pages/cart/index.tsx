@@ -1,5 +1,5 @@
-import { Head, Link, useForm, router } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
+import { Head, Link, router } from '@inertiajs/react';
+import EcommerceLayout from '@/layouts/ecommerce-layout';
 
 interface Product {
     id: number;
@@ -55,7 +55,7 @@ export default function Index({ cart, total }: Props) {
     };
 
     return (
-        <AppLayout>
+        <EcommerceLayout>
             <Head title="Shopping Cart" />
 
             <div className="py-12">
@@ -225,6 +225,6 @@ export default function Index({ cart, total }: Props) {
                     )}
                 </div>
             </div>
-        </AppLayout>
+        </EcommerceLayout>
     );
 }

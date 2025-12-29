@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
+import EcommerceLayout from '@/layouts/ecommerce-layout';
 
 interface Product {
     id: number;
@@ -36,7 +36,7 @@ export default function Index({ products }: Props) {
     };
 
     return (
-        <AppLayout>
+        <EcommerceLayout>
             <Head title="Products" />
 
             <div className="py-12">
@@ -146,6 +146,6 @@ export default function Index({ products }: Props) {
                     )}
                 </div>
             </div>
-        </AppLayout>
+        </EcommerceLayout>
     );
 }
