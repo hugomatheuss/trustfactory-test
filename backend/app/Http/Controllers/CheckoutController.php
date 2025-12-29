@@ -33,6 +33,12 @@ class CheckoutController extends Controller
             return to_route('cart.index')->with('error', 'Your cart is empty.');
         }
 
+        foreach ($cart->items as $item) {
+            if ($item->quantity > $item->product->stock_quantity) {
+                return back()->with('error', "Insufficient stock for {$item->product->name}. Available: {$item->product->stock_quantity}");
+            }
+        }
+
         return DB::transaction(function () use ($cart): RedirectResponse {
             $total = $cart->items->sum(fn ($item): int|float => $item->quantity * $item->product->price);
 
