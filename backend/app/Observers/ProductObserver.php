@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Jobs\LowStockNotificationJob;
 use App\Models\Product;
 
 class ProductObserver
