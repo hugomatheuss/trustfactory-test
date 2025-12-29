@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withSchedule(function (Schedule $schedule): void {
-        $schedule->job(new SendDailySalesReportJob())->dailyAt('23:00');
+        $schedule->job(new SendDailySalesReportJob)->dailyAt('23:00');
     })
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);

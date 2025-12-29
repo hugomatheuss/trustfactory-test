@@ -28,7 +28,7 @@ class DailySalesReportTest extends TestCase
         $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, fn($mail) => $mail->hasTo(config('app.admin_email')));
+        Mail::assertSent(DailySalesReportMail::class, fn ($mail) => $mail->hasTo(config('app.admin_email')));
     }
 
     public function test_daily_sales_report_only_includes_completed_orders(): void
@@ -52,7 +52,7 @@ class DailySalesReportTest extends TestCase
         $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, fn($mail): bool => $mail->totalOrders === 1 && $mail->totalSales == 100.00);
+        Mail::assertSent(DailySalesReportMail::class, fn ($mail): bool => $mail->totalOrders === 1 && $mail->totalSales == 100.00);
     }
 
     public function test_daily_sales_report_only_includes_todays_orders(): void
@@ -78,7 +78,7 @@ class DailySalesReportTest extends TestCase
         $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, fn($mail): bool => $mail->totalOrders === 1 && $mail->totalSales == 100.00);
+        Mail::assertSent(DailySalesReportMail::class, fn ($mail): bool => $mail->totalOrders === 1 && $mail->totalSales == 100.00);
     }
 
     public function test_daily_sales_report_sends_even_with_no_orders(): void
@@ -88,6 +88,6 @@ class DailySalesReportTest extends TestCase
         $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, fn($mail): bool => $mail->totalOrders === 0 && $mail->totalSales == 0);
+        Mail::assertSent(DailySalesReportMail::class, fn ($mail): bool => $mail->totalOrders === 0 && $mail->totalSales == 0);
     }
 }
