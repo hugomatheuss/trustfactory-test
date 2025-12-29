@@ -39,6 +39,7 @@ cd trustfactory-test
 ### 2. Start the project
 
 ```bash
+chmod +x start.sh
 ./start.sh
 ```
 
