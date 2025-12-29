@@ -25,12 +25,10 @@ class DailySalesReportTest extends TestCase
             'total' => 100.00,
         ]);
 
-        $job = new SendDailySalesReportJob();
+        $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, function ($mail) {
-            return $mail->hasTo(config('app.admin_email'));
-        });
+        Mail::assertSent(DailySalesReportMail::class, fn($mail) => $mail->hasTo(config('app.admin_email')));
     }
 
     public function test_daily_sales_report_only_includes_completed_orders(): void
@@ -51,12 +49,10 @@ class DailySalesReportTest extends TestCase
             'total' => 50.00,
         ]);
 
-        $job = new SendDailySalesReportJob();
+        $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, function ($mail) {
-            return $mail->totalOrders === 1 && $mail->totalSales == 100.00;
-        });
+        Mail::assertSent(DailySalesReportMail::class, fn($mail): bool => $mail->totalOrders === 1 && $mail->totalSales == 100.00);
     }
 
     public function test_daily_sales_report_only_includes_todays_orders(): void
@@ -79,23 +75,19 @@ class DailySalesReportTest extends TestCase
             'created_at' => now()->subDay(),
         ]);
 
-        $job = new SendDailySalesReportJob();
+        $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, function ($mail) {
-            return $mail->totalOrders === 1 && $mail->totalSales == 100.00;
-        });
+        Mail::assertSent(DailySalesReportMail::class, fn($mail): bool => $mail->totalOrders === 1 && $mail->totalSales == 100.00);
     }
 
     public function test_daily_sales_report_sends_even_with_no_orders(): void
     {
         Mail::fake();
 
-        $job = new SendDailySalesReportJob();
+        $job = new SendDailySalesReportJob;
         $job->handle();
 
-        Mail::assertSent(DailySalesReportMail::class, function ($mail) {
-            return $mail->totalOrders === 0 && $mail->totalSales == 0;
-        });
+        Mail::assertSent(DailySalesReportMail::class, fn($mail): bool => $mail->totalOrders === 0 && $mail->totalSales == 0);
     }
 }

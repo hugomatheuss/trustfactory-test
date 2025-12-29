@@ -22,9 +22,7 @@ class LowStockNotificationTest extends TestCase
 
         $product->update(['stock_quantity' => 5]);
 
-        Queue::assertPushed(LowStockNotificationJob::class, function ($job) use ($product) {
-            return $job->product->id === $product->id;
-        });
+        Queue::assertPushed(LowStockNotificationJob::class, fn($job): bool => $job->product->id === $product->id);
     }
 
     public function test_low_stock_job_is_not_dispatched_when_stock_stays_above_threshold(): void
@@ -69,9 +67,7 @@ class LowStockNotificationTest extends TestCase
         $job = new LowStockNotificationJob($product);
         $job->handle();
 
-        Mail::assertSent(LowStockAlert::class, function ($mail) {
-            return $mail->hasTo(config('app.admin_email'));
-        });
+        Mail::assertSent(LowStockAlert::class, fn($mail) => $mail->hasTo(config('app.admin_email')));
     }
 
     public function test_low_stock_email_contains_product_information(): void
@@ -86,9 +82,7 @@ class LowStockNotificationTest extends TestCase
         $job = new LowStockNotificationJob($product);
         $job->handle();
 
-        Mail::assertSent(LowStockAlert::class, function ($mail) use ($product) {
-            return $mail->product->id === $product->id
-                && $mail->product->name === 'Test Product';
-        });
+        Mail::assertSent(LowStockAlert::class, fn($mail): bool => $mail->product->id === $product->id
+            && $mail->product->name === 'Test Product');
     }
 }

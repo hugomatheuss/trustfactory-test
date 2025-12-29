@@ -17,4 +17,3 @@ class CartItemPolicy
         return $user->id === $cartItem->cart->user_id;
     }
 }
-

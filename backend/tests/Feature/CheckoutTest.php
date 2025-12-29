@@ -100,7 +100,7 @@ class CheckoutTest extends TestCase
 
         $this->actingAs($user)->post(route('checkout.store'));
 
-        $order = Order::first();
+        $order = Order::query()->first();
         $this->assertNotNull($order);
         $this->assertDatabaseHas('orders_items', [
             'order_id' => $order->id,
