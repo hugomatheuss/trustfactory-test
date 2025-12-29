@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -58,5 +60,10 @@ class User extends Authenticatable
     public function getOrCreateCart(): Cart
     {
         return $this->cart ?? $this->cart()->create();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
     }
 }
