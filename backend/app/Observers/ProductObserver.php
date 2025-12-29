@@ -21,7 +21,7 @@ class ProductObserver
         $threshold = 5;
 
         if ($oldStock > $threshold && $newStock <= $threshold && $newStock > 0) {
-            LowStockNotificationJob::dispatch($product);
+            dispatch(new \App\Jobs\LowStockNotificationJob($product));
         }
     }
 }
