@@ -100,6 +100,16 @@ services:
       - app
       - mysql
 
+  mailpit:
+    image: axllent/mailpit
+    container_name: laravel_mailpit
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - laravel_network
+
 networks:
   laravel_network:
     driver: bridge

@@ -16,7 +16,7 @@ class LowStockNotificationJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        private readonly Product $product,
+        public Product $product,
     ) {
         //
     }
@@ -26,8 +26,7 @@ class LowStockNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $adminEmail = config('app.admin_email', 'admin@example.com');
-
+        $adminEmail = config('app.admin_email', '');
         Mail::to($adminEmail)->send(new LowStockAlert($this->product));
     }
 }

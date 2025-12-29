@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 class DailySalesReportMail extends Mailable
 {
+    public $date;
     use Queueable, SerializesModels;
 
     /**

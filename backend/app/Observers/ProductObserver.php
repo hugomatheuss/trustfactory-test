@@ -2,49 +2,26 @@
 
 namespace App\Observers;
 
+use App\Jobs\LowStockNotificationJob;
 use App\Models\Product;
 
 class ProductObserver
 {
     /**
-     * Handle the Product "created" event.
-     */
-    public function created(Product $product): void
-    {
-        //
-    }
-
-    /**
      * Handle the Product "updated" event.
      */
     public function updated(Product $product): void
     {
-        if ($product->wasChanged('stock_quantity') && $product->isLowStock(5)) {
-            dispatch(new \App\Jobs\LowStockNotificationJob($product));
+        if (! $product->wasChanged('stock_quantity')) {
+            return;
         }
-    }
 
-    /**
-     * Handle the Product "deleted" event.
-     */
-    public function deleted(Product $product): void
-    {
-        //
-    }
+        $oldStock = $product->getOriginal('stock_quantity');
+        $newStock = $product->stock_quantity;
+        $threshold = 5;
 
-    /**
-     * Handle the Product "restored" event.
-     */
-    public function restored(Product $product): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Product "force deleted" event.
-     */
-    public function forceDeleted(Product $product): void
-    {
-        //
+        if ($oldStock > $threshold && $newStock <= $threshold && $newStock > 0) {
+            LowStockNotificationJob::dispatch($product);
+        }
     }
 }
