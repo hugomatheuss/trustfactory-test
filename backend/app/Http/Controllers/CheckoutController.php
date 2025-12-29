@@ -11,7 +11,7 @@ class CheckoutController extends Controller
 {
     public function index(): Response|RedirectResponse
     {
-        $cart = auth()->user()->getOrCreateCart;
+        $cart = auth()->user()->getOrCreateCart();
         $cart->load('items.product');
 
         if ($cart->items->isEmpty()) {
@@ -26,7 +26,7 @@ class CheckoutController extends Controller
 
     public function store(): RedirectResponse
     {
-        $cart = auth()->user()->getOrCreateCart;
+        $cart = auth()->user()->getOrCreateCart();
         $cart->load('items.product');
 
         if ($cart->items->isEmpty()) {

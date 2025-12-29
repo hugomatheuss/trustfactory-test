@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
-use Inertia\Ssr\Response;
+use Inertia\Response;
 
 class OrderController extends Controller
 {
