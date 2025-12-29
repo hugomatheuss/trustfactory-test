@@ -36,45 +36,20 @@ git clone https://github.com/your-username/trustfactory-test.git
 cd trustfactory-test
 ```
 
-### 2. Start Docker containers
+### 2. Start the project
 
 ```bash
-cd docker
-docker compose up -d
+./start.sh
 ```
 
-This will start:
-- **Laravel App** - http://localhost:8000
-- **MySQL** - Port 3306
-- **Mailpit** - http://localhost:8025 (email testing UI)
-- **Queue Worker** - Processes background jobs
+This script will automatically:
+- Copy .env.example → .env
+- Build and start Docker containers
+- Install PHP dependencies
+- Generate APP_KEY
+- Run database migrations
 
-### 3. Install dependencies and setup
-
-```bash
-# Enter the app container
-docker exec -it laravel_app bash
-
-# Install PHP dependencies
-composer install
-
-# Install Node dependencies
-npm install
-
-# Generate application key
-php artisan key:generate
-
-# Run migrations
-php artisan migrate
-
-# Seed the database
-php artisan db:seed
-
-# Build frontend assets
-npm run build
-```
-
-### 4. Access the application
+### 3. Access the application
 
 - **Application:** http://localhost:8000
 - **Mailpit (Email UI):** http://localhost:8025
@@ -252,8 +227,4 @@ docker exec laravel_app php artisan migrate:fresh --seed
 ```bash
 docker exec laravel_app php artisan queue:failed
 ```
-
-## License
-
-This project is open-sourced software.
 
