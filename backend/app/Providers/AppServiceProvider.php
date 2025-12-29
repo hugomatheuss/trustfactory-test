@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Http\Responses\LoginResponse;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use App\Observers\ProductObserver;
+use App\Policies\CartItemPolicy;
 use App\Policies\OrderPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Order::class, OrderPolicy::class);
+        Gate::policy(CartItem::class, CartItemPolicy::class);
 
         Gate::define('accessDashboard', fn (User $user): bool => $user->is_admin);
 

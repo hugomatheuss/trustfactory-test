@@ -6,11 +6,14 @@ use App\Http\Requests\AddCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
 use App\Models\CartItem;
 use App\Models\Product;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class CartController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $cart = auth()->user()->getOrCreateCart();
@@ -55,7 +58,7 @@ class CartController extends Controller
 
     public function updateItem(UpdateCartItemRequest $request, CartItem $cartItem): RedirectResponse
     {
-        // $this->authorize('update', $cartItem);
+        $this->authorize('update', $cartItem);
 
         $validated = $request->validated();
 
@@ -70,7 +73,7 @@ class CartController extends Controller
 
     public function removeItem(CartItem $cartItem): RedirectResponse
     {
-        // $this->authorize('delete', $cartItem);
+        $this->authorize('delete', $cartItem);
 
         $cartItem->delete();
 

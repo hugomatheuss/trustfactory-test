@@ -17,7 +17,6 @@ class SendDailySalesReportJob implements ShouldQueue
      */
     public function handle(): void
     {
-
         $today = now()->toDateString();
 
         $orders = Order::with('items.product')

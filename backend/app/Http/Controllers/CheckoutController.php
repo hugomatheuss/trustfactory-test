@@ -49,7 +49,10 @@ class CheckoutController extends Controller
                     'price' => $item->product->price,
                 ]);
 
-                $item->product->decrement('stock_quantity', $item->quantity);
+                $product = $item->product;
+                $product->update([
+                    'stock_quantity' => $product->stock_quantity - $item->quantity,
+                ]);
             }
 
             $cart->items()->delete();
