@@ -27,7 +27,7 @@ class SendDailySalesReportJob implements ShouldQueue
         $totalSales = $orders->sum('total');
         $totalOrders = $orders->count();
 
-        $adminEmail = config('app.admin_email', 'admin@example.com');
+        $adminEmail = config('app.admin_email', '');
 
         Mail::to($adminEmail)->send(new DailySalesReportMail($orders, $totalSales, $totalOrders, $today));
     }

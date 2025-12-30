@@ -8,8 +8,6 @@ use Illuminate\Support\Str;
 
 class Category extends Model
 {
-    use HasFactory;
-
     protected $table = 'categories';
 
     protected $fillable = ['name', 'slug'];
